@@ -1,7 +1,6 @@
 import r2pipe
 import json
 import sys
-import re
 import os
 
 
@@ -43,8 +42,13 @@ class R2COM(object):
 
     def get_cocreateinstance_xrefs(self, cocreateinstance_addr):
         self.r2.cmd('aa')
-        call_offsets = re.findall('call ([^ ]+) call', self.r2.cmd('axt {}'.format(cocreateinstance_addr)))
-        return list(set(call_offsets))
+        call_offsets = []
+        for xref in json.loads(self.r2.cmd('axtj {}'.format(cocreateinstance_addr))):
+            if xref.get('type', '') == 'C':
+                call_offset = xref.get('from', 0)
+                if call_offset and not call_offset in call_offsets:
+                    call_offsets.append(call_offset)
+        return call_offsets
 
     def get_clsids(self, call_addrs):
         addrs_and_guids = {}
