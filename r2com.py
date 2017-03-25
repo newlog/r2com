@@ -35,13 +35,11 @@ class R2COM(object):
         return binary_clsid_info
 
     def get_cocreateinstance_addr(self):
-        cocreate_addr = None
-        regexp_result = re.search("plt=([^ ]+) bind=[^ ]* type=[^ ]* name=ole32.dll_CoCreateInstance", self.r2.cmd("ii"))
-        if regexp_result and regexp_result.groups > 1:
-            cocreate_addr = self.get_hex_value_from_string(regexp_result.group(1))
-        else:
-            print('Error: CoCreateInstance function exists but position cannot be extracted')
-        return cocreate_addr
+        binary_imports = json.loads(self.r2.cmd("iij"))
+        for binary_import in binary_imports:
+            if binary_import.get('name', '') == 'ole32.dll_CoCreateInstance':
+                return binary_import.get('plt', None)
+        return None
 
     def get_cocreateinstance_xrefs(self, cocreateinstance_addr):
         self.r2.cmd('aa')
