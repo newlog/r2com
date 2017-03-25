@@ -135,7 +135,8 @@ class R2COM(object):
             clsid_desc = self.find_clsid_desc(clsid_info['clsid'], clsid_db)
             if clsid_desc:
                 success = True
-                self.r2.cmd('CC {} @ {}'.format('COM object ' + clsid_desc, push_addr))
+                self.r2.cmd('CC {} @ {}'.format('COM CLSID ' + clsid_desc, push_addr))
+                print('CLSID parameter at 0x{:02x}: {}'.format(push_addr, clsid_desc))
         return success
 
     @staticmethod
