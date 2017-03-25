@@ -90,7 +90,7 @@ class R2COM(object):
 
     def get_clsid_value_from_clsid_addr(self, clsid_addr):
         clsid = None
-        clsid_raw = self.r2.cmd('p8 16 @ {}'.format(clsid_addr))
+        clsid_raw = self.r2.cmd('p8 16 @ {}'.format(clsid_addr)).strip()
         if len(clsid_raw) == 32:
             clsid_first_chunk = self.convert_hex_str_to_little_endian(clsid_raw[0:8])
             if clsid_first_chunk:
