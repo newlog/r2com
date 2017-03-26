@@ -1,4 +1,4 @@
-R2COM
+R2COM | [![Build Status](https://travis-ci.org/newlog/r2com.svg?branch=master)](https://travis-ci.org/newlog/r2com)
 -----
 
 This [radare2](https://www.radare.org/r/) script allows you to easily identify what type of COM object are you dealing with when reversing a binary calling
