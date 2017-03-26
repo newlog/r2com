@@ -1,7 +1,6 @@
 import r2pipe
 import json
 import sys
-import re
 import os
 
 
@@ -35,18 +34,21 @@ class R2COM(object):
         return binary_clsid_info
 
     def get_cocreateinstance_addr(self):
-        cocreate_addr = None
-        regexp_result = re.search("plt=([^ ]+) bind=[^ ]* type=[^ ]* name=ole32.dll_CoCreateInstance", self.r2.cmd("ii"))
-        if regexp_result and regexp_result.groups > 1:
-            cocreate_addr = self.get_hex_value_from_string(regexp_result.group(1))
-        else:
-            print('Error: CoCreateInstance function exists but position cannot be extracted')
-        return cocreate_addr
+        binary_imports = json.loads(self.r2.cmd("iij"))
+        for binary_import in binary_imports:
+            if binary_import.get('name', '') == 'ole32.dll_CoCreateInstance':
+                return binary_import.get('plt', None)
+        return None
 
     def get_cocreateinstance_xrefs(self, cocreateinstance_addr):
         self.r2.cmd('aa')
-        call_offsets = re.findall('call ([^ ]+) call', self.r2.cmd('axt {}'.format(cocreateinstance_addr)))
-        return list(set(call_offsets))
+        call_offsets = []
+        for xref in json.loads(self.r2.cmd('axtj {}'.format(cocreateinstance_addr))):
+            if xref.get('type', '') == 'C':
+                call_offset = xref.get('from', 0)
+                if call_offset and not call_offset in call_offsets:
+                    call_offsets.append(call_offset)
+        return call_offsets
 
     def get_clsids(self, call_addrs):
         addrs_and_guids = {}
@@ -90,7 +92,7 @@ class R2COM(object):
 
     def get_clsid_value_from_clsid_addr(self, clsid_addr):
         clsid = None
-        clsid_raw = self.r2.cmd('p8 16 @ {}'.format(clsid_addr))
+        clsid_raw = self.r2.cmd('p8 16 @ {}'.format(clsid_addr)).strip()
         if len(clsid_raw) == 32:
             clsid_first_chunk = self.convert_hex_str_to_little_endian(clsid_raw[0:8])
             if clsid_first_chunk:
