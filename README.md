@@ -8,6 +8,10 @@ the OLE32.DLL library.
 This plugin will add a comment in the instruction pushing the `rclsid` parameter helping you identify what the COM
 object is.
 
+To get more information regarding reverse engineering COM functionality, you
+can take a look to the
+[Controlling Internet Explorer with COM](https://www.fireeye.com/blog/threat-research/2010/08/reversing-malware-command-control-sockets.html) section in this post by FireEye.
+
 Usage
 -----
 
