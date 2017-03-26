@@ -5,12 +5,8 @@ python:
   - "3.6"
 install:
   - export prev_path=$PWD
-  - echo $PWD
   - cd /tmp/ && git clone https://github.com/radare/radare2.git && cd radare2 && ./sys/install.sh
   - cd $prev_path
-  - echo $prev_path
-  - ls -halt /usr/bin
-  - export PYTHONPATH=$PYTHONPATH:$pwd
   - pip install -r requirements.txt
 script:
   - py.test
