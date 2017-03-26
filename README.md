@@ -12,6 +12,8 @@ To get more information regarding reverse engineering COM functionality, you
 can take a look to the
 [Controlling Internet Explorer with COM](https://www.fireeye.com/blog/threat-research/2010/08/reversing-malware-command-control-sockets.html) section in this post by FireEye.
 
+After using this script, you will still have to figure out what COM object function is being called. The manual process to do so - yep, not done here :( - is detailed [here](http://reverseengineering.stackexchange.com/a/2823/13290).
+
 Usage
 -----
 
