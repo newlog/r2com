@@ -7,6 +7,7 @@ install:
   - export prev_path=$PWD
   - cd /tmp/ && git clone https://github.com/radare/radare2.git && cd radare2 && ./sys/install.sh
   - cd $prev_path
+  - export PYTHONPATH=$PYTHONPATH:$pwd
   - pip install -r requirements.txt
 script:
   - py.test
