@@ -5,7 +5,7 @@ python:
   - "3.6"
 install:
   - git clone https://github.com/radare/radare2.git
-  - cd radare2 && ./sys/install.sh && rm -rf radare2 && cd ..
+  - cd radare2 && ./sys/install.sh && cd .. && rm -rf radare2
   - export PYTHONPATH=$PYTHONPATH:$pwd
   - pip install -r requirements.txt
 script:
