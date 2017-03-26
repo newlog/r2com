@@ -2,7 +2,6 @@ language: python
 sudo: required
 python:
   - "2.7"
-  - "3.6"
 install:
   - export prev_path=$PWD
   - cd /tmp/ && git clone https://github.com/radare/radare2.git && cd radare2 && ./sys/install.sh
