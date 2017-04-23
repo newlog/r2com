@@ -17,14 +17,14 @@ After using this script, you will still have to figure out what COM object funct
 Usage
 -----
 
+The preferred way to use this plugin is by native radare2 plugin through r2pm:
+
+[![asciicast](https://asciinema.org/a/4rd2r07pkkp69jxfy7tyhyis0.png)](https://asciinema.org/a/4rd2r07pkkp69jxfy7tyhyis0)
+
+If you want, you can execute it as an external script:
+
 [![asciicast](https://asciinema.org/a/108918.png)](https://asciinema.org/a/108918)
 
-
-You can either execute the script standalone or inside r2.
-
-```bash
-$ python r2com.py <binary>
-```
 
 ```bash
 $ r2 <binary>
